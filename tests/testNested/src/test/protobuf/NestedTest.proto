@@ -1,0 +1,20 @@
+syntax = "proto2";
+package com.vmturbo.protoc.spring.rest.testNested;
+
+message Test {
+    message NestedMsg {
+        optional DoubleNested foo = 1;
+        message DoubleNested {
+            optional int64 bar = 2;
+        }
+    }
+
+    optional NestedMsg nested = 1;
+
+    optional NestedMsg.DoubleNested doubleNested = 2;
+}
+
+message Test2 {
+    optional Test.NestedMsg testNested = 1;
+    optional Test.NestedMsg.DoubleNested testDoubleNested = 2;
+}

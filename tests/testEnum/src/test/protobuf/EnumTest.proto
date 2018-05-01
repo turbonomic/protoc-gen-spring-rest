@@ -1,0 +1,14 @@
+syntax = "proto2";
+package com.vmturbo.protoc.spring.rest.testEnum;
+
+enum TestEnum {
+    NONE = 0;
+    WORK = 1;
+    PLAY = 2;
+}
+
+message Test {
+    optional TestEnum foo = 1;
+    repeated TestEnum fooRepeated = 2;
+    map<string, TestEnum> fooValueMap = 3;
+}

@@ -1,0 +1,14 @@
+syntax = "proto2";
+package com.vmturbo.protoc.spring.rest.testOneOf;
+
+message TestMessage {
+    optional int64 content = 1;
+}
+
+message OneOfTestDTO {
+    oneof test_field {
+        bool option = 1;
+        int64 another = 2;
+        TestMessage message = 3;
+    }
+}

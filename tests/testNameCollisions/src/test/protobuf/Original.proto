@@ -1,0 +1,17 @@
+syntax = "proto2";
+package com.vmturbo.protoc.spring.rest.testNameCollisions;
+
+import "Duplicate.proto";
+
+message TestMessage {
+    optional int64 long_var = 1;
+}
+
+message DoubleMessage {
+    optional TestMessage original = 1;
+    optional com.vmturbo.protoc.spring.rest.testNameCollisions2.TestMessage other = 2;
+}
+
+service TestService {
+    rpc TestThis(TestMessage) returns (TestMessage);
+}

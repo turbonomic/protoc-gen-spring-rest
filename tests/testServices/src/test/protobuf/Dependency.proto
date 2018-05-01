@@ -1,0 +1,10 @@
+syntax = "proto2";
+package com.turbonomic.protoc.spring.rest.testServices2;
+
+message RandomRequest {
+    optional int64 value = 1;
+}
+
+message RandomResponse {
+    optional int64 value = 1;
+}

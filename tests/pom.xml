@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.turbonomic</groupId>
+        <artifactId>protoc-gen-spring-rest</artifactId>
+        <version>HEAD-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>protoc-gen-spring-rest-test</artifactId>
+
+    <packaging>pom</packaging>
+
+    <properties>
+        <swagger-annotations.version>1.5.4</swagger-annotations.version>
+        <spring.version>4.3.8.RELEASE</spring.version>
+        <protobuf.maven.plugin.version>0.5.1</protobuf.maven.plugin.version>
+    </properties>
+
+    <modules>
+        <module>testFileNameFormat</module>
+        <module>testCommentsToSwagger</module>
+        <module>testEnum</module>
+        <module>testImport</module>
+        <module>testJavaKeyword</module>
+        <module>testJavaMultipleFiles</module>
+        <module>testJavaOpt</module>
+        <module>testNameCollisions</module>
+        <module>testNested</module>
+        <module>testNestedEnum</module>
+        <module>testOneOf</module>
+        <module>testOuterName</module>
+        <module>testProto3</module>
+        <module>testServices</module>
+        <module>testTypes</module>
+        <module>testUnderscores</module>
+        <module>testHttpRoutes</module>
+    </modules>
+
+    <build>
+        <extensions>
+            <!-- Exposes OS properties in mavenized format.
+                 Required for protobuf-maven-plugin
+                 (to download the right protobuf compiler) -->
+            <extension>
+                <groupId>kr.motd.maven</groupId>
+                <artifactId>os-maven-plugin</artifactId>
+                <version>${os.maven.plugin.version}</version>
+            </extension>
+        </extensions>
+
+        <plugins>
+            <plugin>
+                <groupId>org.xolstice.maven.plugins</groupId>
+                <artifactId>protobuf-maven-plugin</artifactId>
+                <version>${protobuf.maven.plugin.version}</version>
+                <configuration>
+                    <protoSourceRoot>src/main/protobuf</protoSourceRoot>
+                    <protoTestSourceRoot>src/test/protobuf</protoTestSourceRoot>
+                    <!-- os.detected.classifier provided by os-maven-plugin -->
+                    <protocArtifact>com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}</protocArtifact>
+                    <!-- Using grpc-java's plugin to automatically download the right protobuf compiler
+ instead of specifying it manually. -->
+                    <pluginId>grpc-java</pluginId>
+                    <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
+                    <protocPlugins>
+                        <protocPlugin>
+                            <id>protoc-gen-spring-rest</id>
+                            <groupId>com.turbonomic</groupId>
+                            <artifactId>protoc-gen-spring-rest-plugin</artifactId>
+                            <version>${project.version}</version>
+                            <mainClass>com.turbonomic.protoc.spring.rest.Main</mainClass>
+                        </protocPlugin>
+                    </protocPlugins>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>compile-custom</goal>
+                            <goal>test-compile</goal>
+                            <goal>test-compile-custom</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-netty</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-protobuf</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-stub</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>

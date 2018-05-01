@@ -1,0 +1,24 @@
+syntax = "proto3";
+package com.turbonomic.protoc.spring.rest.testProto3;
+
+message EchoRequest {
+    message SubMessage {
+        string echo = 1;
+    }
+
+    oneof test_oneof {
+        string echo = 1;
+        SubMessage echo_submessage = 3;
+    }
+}
+
+message EchoResponse {
+    oneof test_oneof {
+        string echo = 1;
+        EchoRequest.SubMessage echo_submessage = 2;
+    }
+}
+
+service EchoService {
+    rpc echo(EchoRequest) returns (EchoResponse);
+}

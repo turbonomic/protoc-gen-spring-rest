@@ -1,0 +1,9 @@
+syntax = "proto2";
+package testPkg2;
+
+option java_package = "com.vmturbo.protoc.spring.rest.testJavaOpt2";
+option java_outer_classname = "BarClassDTO";
+
+message Bar {
+    optional int64 bar = 1;
+}

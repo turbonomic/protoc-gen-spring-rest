@@ -1,0 +1,6 @@
+syntax = "proto2";
+package com.vmturbo.protoc.spring.rest.testImport2;
+
+message Bar {
+    optional int64 val = 1;
+}

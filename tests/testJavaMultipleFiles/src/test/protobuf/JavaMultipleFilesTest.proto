@@ -1,0 +1,19 @@
+syntax = "proto2";
+package com.vmturbo.protoc.spring.rest.testJavaMultipleFiles;
+
+// This should force the protobuf compiler to create multiple files.
+option java_multiple_files = true;
+
+message Msg1 {
+    optional string string_content = 1;
+}
+
+// Message to test nested message handling
+message Msg2 {
+
+    message NestedMsg {
+        optional int64 numeric_content = 2;
+    }
+
+    optional NestedMsg numeric_content = 2;
+}

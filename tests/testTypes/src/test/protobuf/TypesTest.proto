@@ -1,0 +1,36 @@
+syntax = "proto2";
+package com.vmturbo.protoc.spring.rest.testTypes;
+
+enum TestEnum {
+    NONE = 0;
+    SOME = 1;
+}
+
+message OtherMessage {
+    optional int32 val = 1;
+}
+
+message TestMessage {
+    optional int32 the_int = 1;
+    optional int64 the_long = 2;
+    optional string the_string = 3;
+    optional bool the_bool = 4;
+    optional float the_float = 5;
+    optional double the_double = 6;
+    optional uint32 the_uint = 7;
+    optional uint64 the_ulong = 8;
+    optional fixed32 the_fixed_int = 9;
+    optional fixed64 the_fixed_long = 10;
+
+    optional TestEnum the_enum = 11;
+    repeated TestEnum list_enum = 12;
+    map<string, TestEnum> map_enum = 13;
+
+    optional OtherMessage the_msg = 14;
+    repeated OtherMessage list_msg = 15;
+    map<string, OtherMessage> map_msg = 16;
+
+    map<string, string> simple_map = 17;
+    repeated string simple_list = 18;
+}
+

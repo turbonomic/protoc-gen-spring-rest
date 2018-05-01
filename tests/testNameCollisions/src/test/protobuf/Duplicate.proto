@@ -1,0 +1,14 @@
+syntax = "proto2";
+package com.vmturbo.protoc.spring.rest.testNameCollisions2;
+
+message TestMessage {
+    optional bool var = 1;
+}
+
+message OtherMessage {
+    optional bool var = 1;
+}
+
+service TestService {
+    rpc TestThis(OtherMessage) returns (OtherMessage);
+}

@@ -1,0 +1,15 @@
+syntax = "proto2";
+package com.vmturbo.protoc.spring.rest.testJavaKeyword;
+
+// Test various keywords that are reserved in Java.
+message TestMessage {
+    optional bool default = 1;
+    optional bool static = 2;
+    optional bool final = 3;
+    optional bool interface = 4;
+    optional bool boolean = 5;
+}
+
+service TestService {
+    rpc TestCall (TestMessage) returns (TestMessage);
+}

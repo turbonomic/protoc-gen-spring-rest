@@ -1,0 +1,6 @@
+syntax = "proto2";
+package com.vmturbo.protoc.spring.rest.testFileNameFormat;
+
+message LowercaseTest {
+    optional int64 var = 1;
+}

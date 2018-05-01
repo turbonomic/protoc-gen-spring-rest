@@ -1,0 +1,25 @@
+syntax = "proto2";
+package com.vmturbo.protoc.spring.rest.testCommentsToSwagger;
+
+// This is an important enum.
+enum TestEnum {
+    // This is a comment for the enum value.
+    NONE = 1; // And a trailing comment...
+}
+
+// This is an important message.
+message Bar {
+    // Nested enum test..
+    enum AnotherEnum {
+        // This is meaningless.
+        YAY = 1;
+    }
+    // This is an integer field.
+    optional int64 int_field = 1;
+
+    // This one is really important.
+    required int64 some_id = 2;
+
+    // Testing optional enums.
+    optional AnotherEnum theEnum = 3;
+}

@@ -1,0 +1,33 @@
+syntax = "proto2";
+package com.turbonomic.protoc.spring.rest.testServices;
+
+import "Dependency.proto";
+
+message EchoRequest {
+    required string echo_this = 1;
+
+    optional string extra_optional = 2;
+}
+
+message EchoResponse {
+    optional string echo = 1;
+}
+
+service EchoService {
+    // Echo some stuff.
+    rpc Echo(EchoRequest) returns (EchoResponse);
+
+    // Echo some stuff with a client-side stream.
+    rpc ClientStreamEcho(stream EchoRequest) returns (EchoResponse);
+
+    // Echo some stuff with a server-side stream response.
+    rpc ServerStreamEcho(EchoRequest) returns (stream EchoResponse);
+
+    // Echo some stuff with a bi-directional stream.
+    rpc BiStreamEcho(stream EchoRequest) returns (stream EchoResponse);
+}
+
+service ImportEchoService {
+    // Call a method using input/output from another package.
+    rpc Echo(com.turbonomic.protoc.spring.rest.testServices2.RandomRequest) returns (com.turbonomic.protoc.spring.rest.testServices2.RandomResponse);
+}

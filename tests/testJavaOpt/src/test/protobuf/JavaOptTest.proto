@@ -1,0 +1,16 @@
+syntax = "proto2";
+package testPkg;
+
+import "JavaOptDependency.proto";
+
+option java_package = "com.vmturbo.protoc.spring.rest.testJavaOpt";
+option java_outer_classname = "TestClassDTO";
+
+enum TestEnum {
+    NONE = 1;
+}
+
+message Foo {
+    optional int64 worr = 8;
+    optional testPkg2.Bar bar = 9;
+}

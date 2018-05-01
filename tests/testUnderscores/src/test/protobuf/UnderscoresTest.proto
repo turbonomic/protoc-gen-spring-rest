@@ -1,0 +1,16 @@
+syntax = "proto2";
+package com.vmturbo.protoc.spring.rest.testUnderscores;
+
+message TestUnderscores {
+    optional bool test_field_ = 4;
+    optional int64 test_field = 2;
+    optional string test_field__ = 3;
+
+    optional int32 _test_field = 6;
+    optional bytes __test__field_ = 7;
+}
+
+service TestUnderscoresService {
+    rpc Test(TestUnderscores) returns (TestUnderscores);
+    rpc StreamTest(stream TestUnderscores) returns (stream TestUnderscores);
+}
