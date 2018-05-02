@@ -117,7 +117,9 @@ public class SpringRestTemplates {
     private static final String SERVICE_METHOD_TEMPLATE =
         "\n@ApiOperation(value=\"<path>\",notes=<comments>)" +
         "@RequestMapping(path=\"<path>\",method=<methodType>,"+
-        "consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE}," +
+        "<if(isRequestJson)>" +
+            "consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE}," +
+        "<endif>" +
         "produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})" +
         "public ResponseEntity\\<<responseBodyType>> <restMethodName> (<requestArgs>) {" +
             "if (service == null) {" +

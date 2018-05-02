@@ -95,16 +95,20 @@ public class MethodGenerator {
                 return generateMethodCode(httpRule.getGet(), Optional.empty(),
                         SpringMethodType.GET, bindingIndex);
             case PUT:
-                return generateMethodCode(httpRule.getPut(), Optional.of(httpRule.getBody()),
+                return generateMethodCode(httpRule.getPut(), httpRule.getBody().isEmpty() ?
+                                Optional.empty() : Optional.of(httpRule.getBody()),
                         SpringMethodType.PUT, bindingIndex);
             case POST:
-                return generateMethodCode(httpRule.getPost(), Optional.of(httpRule.getBody()),
+                return generateMethodCode(httpRule.getPost(), httpRule.getBody().isEmpty() ?
+                                Optional.empty() : Optional.of(httpRule.getBody()),
                         SpringMethodType.POST, bindingIndex);
             case DELETE:
-                return generateMethodCode(httpRule.getDelete(), Optional.empty(),
+                return generateMethodCode(httpRule.getDelete(), httpRule.getBody().isEmpty() ?
+                                Optional.empty() : Optional.of(httpRule.getBody()),
                         SpringMethodType.DELETE, bindingIndex);
             case PATCH:
-                return generateMethodCode(httpRule.getPatch(), Optional.of(httpRule.getBody()),
+                return generateMethodCode(httpRule.getPatch(), httpRule.getBody().isEmpty() ?
+                                Optional.empty() : Optional.of(httpRule.getBody()),
                         SpringMethodType.PATCH, bindingIndex);
             case CUSTOM:
                 logger.error("Custom HTTP Rule Pattern Not Supported!\n {}",
@@ -240,6 +244,7 @@ public class MethodGenerator {
 
         return new MethodTemplate(methodType)
                 .setPath(template.getQueryPath())
+                .setIsRequestJson(bodyPattern.isPresent())
                 .setRequestArgs(requestArgs.stream().collect(Collectors.joining(",")))
                 .setRequestToInput(requestToInput.toString())
                 .setRestMethodName(serviceMethodDescriptor.getName() +
@@ -253,6 +258,7 @@ public class MethodGenerator {
         private static final String PREPARE_INPUT_NAME = "prepareInput";
         private static final String PATH_NAME = "path";
         private static final String REST_METHOD_NAME = "restMethodName";
+        private static final String IS_REQUEST_JSON = "isRequestJson";
 
         private final ST template;
 
@@ -278,6 +284,7 @@ public class MethodGenerator {
                 .add("methodType", springMethodType.getType())
                 .add("serviceName", serviceDescriptor.getName())
                 // Defaults.
+                .add(IS_REQUEST_JSON, true)
                 .add(REQUEST_ARGS_NAME, "@RequestBody " + requestBodyType + " inputDto")
                 .add(PATH_NAME, "/" + serviceDescriptor.getName() + "/" + StringUtils.uncapitalize(serviceMethodDescriptor.getName()))
                 .add(REST_METHOD_NAME, StringUtils.uncapitalize(serviceMethodDescriptor.getName()));
@@ -311,6 +318,13 @@ public class MethodGenerator {
         public MethodTemplate setPath(@Nonnull final String path) {
             this.template.remove(PATH_NAME);
             this.template.add(PATH_NAME, path);
+            return this;
+        }
+
+        @Nonnull
+        public MethodTemplate setIsRequestJson(final boolean isRequestJson) {
+            this.template.remove(IS_REQUEST_JSON);
+            this.template.add(IS_REQUEST_JSON, isRequestJson);
             return this;
         }
 
