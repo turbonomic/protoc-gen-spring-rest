@@ -17,6 +17,8 @@ import javax.annotation.Nonnull;
 /**
  * Represents the various HTTP method types, and the associated
  * Spring enum.
+ *
+ * This only represents the method types supported by the protobuf compiler framework.
  */
 enum SpringMethodType {
     POST("RequestMethod.POST"),

@@ -39,6 +39,7 @@ import com.turbonomic.protoc.plugin.common.generator.MessageDescriptor;
 import com.turbonomic.protoc.plugin.common.generator.ServiceDescriptor;
 import com.turbonomic.protoc.plugin.common.generator.ServiceMethodDescriptor;
 import com.turbonomic.protoc.plugin.common.generator.ServiceMethodDescriptor.MethodType;
+import com.turbonomic.protoc.plugin.common.generator.TypeNameFormatter;
 import com.turbonomic.protoc.spring.rest.PathTemplate;
 import com.turbonomic.protoc.spring.rest.SpringRestTemplates;
 
@@ -271,11 +272,11 @@ public class MethodGenerator {
             final String responseBodyType = responseWrapper + "<" + getBodyType(false) + ">";
             this.template = SpringRestTemplates.serviceMethod()
                 .add("resultProto", outputDescriptor.getQualifiedOriginalName())
-                .add("resultType", outputDescriptor.getQualifiedName())
+                .add("resultType", outputDescriptor.getQualifiedName(TypeNameFormatter.IDENTITY))
                 .add("responseWrapper", responseWrapper)
                 .add("requestProto", inputDescriptor.getQualifiedOriginalName())
                 .add("protoInputType", protoInputType)
-                .add("requestType", inputDescriptor.getQualifiedName())
+                .add("requestType", inputDescriptor.getQualifiedName(TypeNameFormatter.IDENTITY))
                 .add("responseBodyType", responseBodyType)
                 .add("isClientStream", type == MethodType.BI_STREAM || type == MethodType.CLIENT_STREAM)
                 .add("isSingleResponse", type == MethodType.SIMPLE || type == MethodType.CLIENT_STREAM)
@@ -347,7 +348,7 @@ public class MethodGenerator {
                 serviceMethodDescriptor.getInputMessage() : serviceMethodDescriptor.getOutputMessage();
         final boolean stream = request ? clientStream() : serverStream();
 
-        String requestBodyType = descriptor.getQualifiedName();
+        String requestBodyType = descriptor.getQualifiedName(TypeNameFormatter.IDENTITY);
         if (stream) {
             requestBodyType = "List<" + requestBodyType + ">";
         }

@@ -26,6 +26,7 @@ import org.stringtemplate.v4.ST;
 
 import com.google.protobuf.DescriptorProtos.DescriptorProto;
 import com.google.protobuf.DescriptorProtos.FieldDescriptorProto.Label;
+
 import com.turbonomic.protoc.plugin.common.generator.EnumDescriptor;
 import com.turbonomic.protoc.plugin.common.generator.FieldDescriptor;
 import com.turbonomic.protoc.plugin.common.generator.MessageDescriptor;
@@ -46,7 +47,7 @@ class SpringRestCodeGenerator extends ProtocPluginCodeGenerator {
      */
     @Override
     @Nonnull
-    protected String getPluginName() {
+    public String getPluginName() {
         return "protoc-spring-rest";
     }
 
